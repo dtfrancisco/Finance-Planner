@@ -7,8 +7,14 @@ User creates a budget plan. User then inputs in transactions, information gets s
 
 #Classes
 
-Budget -> Types of Budget(fixed, disposable, saving) -> Category -> Specific Categories (Rent, Transportation)
+Types of Budget(fixed, disposable, saving)
 
+   Account:              Budget:              Category:               Purchase:
+ (Properties)          (Properties)         (Properties)            (Properties)
+  Name(optional)         TotalAmount           Name                   Amount  
+  Email(unique)          Categories[]          Amount Spent           DateTime
+  Password               Budget Type           Category               Name      
+  Budget[]                                                            Location(optional)                                                             
 #Additional Features
 
 Android/Web functionality

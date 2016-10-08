@@ -1,0 +1,4 @@
+test creating objects/error cases
+toString for all objects
+Fixes I posted on Slack
+Create a main class and start actually working

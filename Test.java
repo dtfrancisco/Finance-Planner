@@ -1,18 +1,20 @@
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 public class Test {
 
 	public static void main(String[] args) {
-		testAcctCreation();
-		//testAcctErrorCases();
+		testPurchaseCreation();
+		//testPurchaseErrorCases();
+		//TODO: Create budgets first
 		testBudgetCreation();
+		Account a = testAcctCreation();
+		testAcctErrorCases(a);
 		//testBudgetErrorCases();
 		testCategoryCreation();
 		//testCategoryErrorCases();
-		testPurchaseCreation();
-		//testPurchaseErrorCases();
-		LocalDateTime time = LocalDateTime.now();
-		System.out.println(time);
+		//LocalDateTime time = LocalDateTime.now();
+		//System.out.println(time);
 	}
 
 	private static void testPurchaseCreation() {
@@ -25,32 +27,43 @@ public class Test {
 		
 	}
 
-	private static void testBudgetCreation() {
+	private static void testBudgetCreation(ArrayList <Purchase> purchases) {
+		String name = "Savings";
 		double amount = 14.54;
-		Category[] categories = new Category[1];
-		int budgetType = 0;
-		Budget budget = new Budget(amount, categories, budgetType);
-		System.out.println(budget.getTotalAmount());
-		System.out.println(budget.getCategories());
-		System.out.println(budget.getBudgetType());
+		ArrayList <Category> categories = new ArrayList <Category> ();
+		int budgetType = 2;
+		Budget budget = new Budget(name, budgetType, amount, categories, purchases);
+		assert(budget != null):"Budget not properly created";
 	}
 
-	private static void testAcctCreation() {
+	private static void testAcctErrorCases(Account a) {
+		try {
+		  a.setBudgets(null);
+		} catch (Exception e) {
+			assert(a.getBudgets() != null):"Budget not supposed to be null";
+		}
+	}
+	
+	private static Account testAcctCreation() {
 		String name = "Joe";
 		String email = "joe97@gmail.com";
 		String password = "Iliketurtles";
-		Budget[] budgets = new Budget[1];
-		Account a = new Account(email, password, budgets);
-		System.out.println(a.getEmail());
-		System.out.println(a.getPassword());
-		System.out.println(a.getBudgets());
-		System.out.println();
-		Account b = new Account(name, email, password, budgets);
-		System.out.println(b.getName());
-		System.out.println(b.getEmail());
-		System.out.println(b.getPassword());
-		System.out.println(b.getBudgets());	
-		System.out.println();
+		ArrayList <Budget> budgets = new ArrayList <Budget> ();
+		ArrayList <Purchase> purchases = new ArrayList <Purchase> ();
+		Account a = new Account(email, password, budgets, purchases);
+		assert(a != null):"User using constructor 1 not properly created";
+		Account b = new Account(name, email, password, budgets, purchases);
+		assert(b != null):"User using constructor 2 not properly created";
+		budgets = a.getBudgets();
+		assert(budgets.size() == 3):"Improper budget initiating in Account";
+		ArrayList <Budget> one = new ArrayList <Budget> ();
+		Budget e = null;
+		one.add(e);
+		a.setBudgets(one);
+		budgets = a.getBudgets();
+		assert(budgets.size() == 1):"Account not properly clearing and adding new budgets";
+		assert(a.getPurchases().size() == 0):"Default purchases case incorrect";
+		return a;
 	}
 
 }

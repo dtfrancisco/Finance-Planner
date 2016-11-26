@@ -1,4 +1,10 @@
-test creating objects/error cases
-toString for all objects
-Fixes I posted on Slack
-Create a main class and start actually working
+TODO
+
+1. IP test creating objects/error cases
+2. IP toString for all objects
+3. IP Create a main class and start actually working
+4. When creating new objects. Make sure name hasn't been taken by another one of those
+objects. Ok for purchases and Account name's (not emails). Bad for Budgets and Categories
+
+5.Budget Type must be 0, 1, or 2 (fixed, disposable, and saving)? Optional? 
+

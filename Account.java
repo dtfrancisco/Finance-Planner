@@ -1,33 +1,32 @@
+import java.util.ArrayList;
 
+// may add more optional fields: phone #, zip code, state/country
 public class Account {
 	private String name; //optional
 	private String email;
 	private String password;
-	private Budget[] budgets; // change to ArrayList?
-	// private Purchase[] purchases?
-	
+	private ArrayList <Budget> budgets;
+	private ArrayList <Purchase> purchases;
+
 	public Account(String name, String email, String password, 
-			Budget[] budgets) {
-		
-		this(email, password, budgets);
-		if (name == null) {
-			throw new IllegalArgumentException();
-		}
+			ArrayList <Budget> budgets, ArrayList <Purchase> purchases) {
+		this(email, password, budgets, purchases);
 		this.setName(name);
 	}
-	
-	public Account(String email, String password, Budget[] budgets) {
-		if (email == null || password == null || budgets == null) {
-			throw new IllegalArgumentException();
-		}
+
+	public Account(String email, String password, ArrayList <Budget> budgets
+			, ArrayList <Purchase> purchases) {
 		this.setEmail(email);
 		this.setPassword(password);
-		if (budgets.length == 0) {
-			//set default budgets I suppose (disposable, fixed, savings);
+		if (budgets.size() == 0) {
+			this.budgets = new ArrayList <Budget> ();
 		}
-		else {
-			this.setBudgets(budgets);
+		this.setBudgets(budgets);
+
+		if (purchases.size() == 0) {
+			this.purchases = new ArrayList <Purchase> ();
 		}
+		this.setPurchases(purchases);
 	}
 
 	public String getName() {
@@ -57,20 +56,68 @@ public class Account {
 	}
 
 	public void setPassword(String password) {
+		//TODO: Add safety later once email is implemented
 		if (password == null) {
 			throw new IllegalArgumentException();
 		}
 		this.password = password;
 	}
 
-	public Budget[] getBudgets() {
+	public ArrayList<Budget> getBudgets() {
 		return budgets;
 	}
 
-	public void setBudgets(Budget[] budgets) {
+	public void setBudgets(ArrayList<Budget> budgets) {
 		if (budgets == null) {
 			throw new IllegalArgumentException();
 		}
-		this.budgets = budgets;
+		else if (budgets.size() == 0) {
+			ArrayList <Category> categories = new ArrayList <Category> ();
+			//TODO: Change this later
+			Budget fixed = new Budget("fixed", 0, 0, categories, purchases);
+			Budget disposable = new Budget("disposable", 1, 0, categories, purchases);
+			Budget savings = new Budget("savings", 2, 0, categories, purchases);
+			this.budgets.add(fixed);
+			this.budgets.add(disposable);
+			this.budgets.add(savings);			
+		}
+		else {
+			this.budgets = budgets;
+		}
+	}
+
+	public ArrayList<Purchase> getPurchases() {
+		return purchases;
+	}
+
+	public void setPurchases(ArrayList<Purchase> purchases) {
+		if (purchases == null) {
+			throw new IllegalArgumentException();
+		}
+		this.purchases = purchases;
+	}
+	
+	public String toString() {
+		String rc = "";
+		if (name != null) {
+		  rc += "Account name : "+name;
+		}
+		rc += "\nEmail address: "+email;
+		// might want to hide this later
+		rc += "\nPassword: "+password;
+		
+		System.out.println();
+		
+		for (int i = 0; i < budgets.size(); i++) {
+			rc += "Budget"+i+" : "+budgets.get(i).getName();
+		}
+		
+		System.out.println();
+		
+		for (int i = 0; i < purchases.size(); i++) {
+			rc += "Purchase"+i+" : "+purchases.get(i).getName();
+		}
+
+		return rc;
 	}
 }

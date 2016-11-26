@@ -1,12 +1,10 @@
 
 public class Category {
+	//TODO: Later add monthly/annual/weekly goals
 	private String name;
 	private double amountSpent;
 	
 	public Category(String name, double amountSpent) {
-		if (name == null || amountSpent < 0) {
-			throw new IllegalArgumentException();
-		}
 		this.setName(name);
 		this.setAmountSpent(amountSpent);
 	}
@@ -31,5 +29,12 @@ public class Category {
 			throw new IllegalArgumentException();
 		}
 		this.amountSpent = amountSpent;
+	}
+	
+	public String toString() {
+		String rc = "";
+		rc += "Category name : "+name;
+		rc += "\nAmount Spent: "+amountSpent;
+		return rc;
 	}
 }
